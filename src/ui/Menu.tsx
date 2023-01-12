@@ -1,22 +1,24 @@
+import clsx from "clsx";
 import { PropsWithChildren } from "react";
 
 type Props = PropsWithChildren<{
-  title: string;
-  items: Props[];
+  title?: string;
+  items?: Props[];
+  className?: string;
 }>;
 
-const Menu = ({ items }: Props) => {
+const Menu = ({ title, className, items, children }: Props) => {
   return (
-    <div className="ue-menu">
-      {items &&
-        items.map((item) => {
-          return (
-            <div>
-              {item.title}
-              {"items" in item && <Menu items={item.items} />}
-            </div>
-          );
-        })}
+    <div className={clsx("ue-menu", className)}>
+      <span className="title">{title}</span>
+
+      {items && (
+        <span className="submenu">
+          {items.map((item) => {
+            return "items" in item && <Menu {...item} />;
+          })}
+        </span>
+      )}
     </div>
   );
 };
