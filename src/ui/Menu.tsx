@@ -1,22 +1,42 @@
-import { PropsWithChildren } from "react";
+import clsx from "clsx";
+import { HTMLProps, PropsWithChildren } from "react";
+import { menu, submenu } from "./Menu.css";
 
-type Props = PropsWithChildren<{
-  title: string;
-  items: Props[];
-}>;
+type Props = HTMLProps<HTMLDivElement> &
+  PropsWithChildren<{
+    isActive?: boolean;
+    title?: string;
+    items?: Props[];
+    className?: string;
+  }>;
 
-const Menu = ({ items }: Props) => {
+const Menu = ({
+  title,
+  isActive,
+  className,
+  items,
+  children,
+  onMouseLeave,
+  ...props
+}: Props) => {
   return (
-    <div className="ue-menu">
-      {items &&
-        items.map((item) => {
-          return (
-            <div>
-              {item.title}
-              {"items" in item && <Menu items={item.items} />}
-            </div>
-          );
-        })}
+    <div
+      className={clsx(menu, className, { "is-active": isActive })}
+      {...props}
+    >
+      <span className="title">{title}</span>
+
+      {items && (
+        <span className={clsx(submenu)} onMouseLeave={onMouseLeave}>
+          {items.map((item, index) => {
+            return (
+              "items" in item && (
+                <Menu key={`${index}`} {...item} aria-label={item.title} />
+              )
+            );
+          })}
+        </span>
+      )}
     </div>
   );
 };

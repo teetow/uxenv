@@ -1,9 +1,8 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import Menu from "./ui/Menu";
 import "./App.css";
 import data from "./data/menu.txt?raw";
 import { parseData } from "./lib/parseMenu";
+import Menu from "./ui/Menu";
+import MenuBar from "./ui/MenuBar";
 
 const testMenu = parseData(data.split("\n"));
 
@@ -23,14 +22,9 @@ const test = [
 ];
 
 function App() {
-  const [count, setCount] = useState(0);
-  console.log(testMenu);
-
   return (
     <div className="App">
-      {/* <Menu items={test}></Menu> */}
-
-      {testMenu.toString()}
+      <MenuBar items={testMenu} />
     </div>
   );
 }
