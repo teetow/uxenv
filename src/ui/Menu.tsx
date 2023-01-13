@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { HTMLProps, PropsWithChildren } from "react";
+import { HTMLProps, PropsWithChildren, useState } from "react";
 import { menu, submenu } from "./Menu.css";
 
 type Props = HTMLProps<HTMLDivElement> &
@@ -10,6 +10,10 @@ type Props = HTMLProps<HTMLDivElement> &
     title?: string;
   }>;
 
+const isDivider = (item: Props) => {
+  return item.title?.replaceAll("=", "").length === 0;
+};
+
 const Menu = ({
   className,
   isActive,
@@ -19,6 +23,8 @@ const Menu = ({
   children,
   ...props
 }: Props) => {
+  const [active, setActive] = useState(-1);
+  
   return (
     <div
       className={clsx(menu, className, { "is-active": isActive })}
@@ -29,11 +35,13 @@ const Menu = ({
       {items && (
         <span className={clsx(submenu)} onMouseLeave={onMouseLeave}>
           {items.map((item, index) => {
-            return (
+            return isDivider(item) ? (
+              <hr />
+            ) : (
               <Menu
                 key={`${index}-${item.title}`}
-                {...item}
                 aria-label={item.title}
+                {...item}
               />
             );
           })}
