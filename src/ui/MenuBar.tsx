@@ -29,11 +29,9 @@ const MenuBar = ({ items }: Props) => {
 
   const handleClick = (ev: MouseEvent) => {
     if (
-      ev.target instanceof HTMLElement &&
-      menuRef?.current?.contains(ev.target)
+      !(ev.target instanceof HTMLElement) ||
+      !menuRef?.current?.contains(ev.target)
     ) {
-      console.log("wahey");
-    } else {
       setActiveId(-1);
       setIsActive(false);
     }
