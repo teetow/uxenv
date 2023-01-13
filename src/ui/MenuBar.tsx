@@ -1,6 +1,7 @@
 import {
   ComponentProps,
   FunctionComponent,
+  HTMLAttributes,
   isValidElement,
   PropsWithChildren,
   SyntheticEvent,
@@ -20,9 +21,11 @@ const childIsMenu = (
   return isValidElement<MenuProps>(element) && "items" in element;
 };
 
-type Props = PropsWithChildren<{ items: MenuProps[] }>;
+type Props = PropsWithChildren<
+  { items: MenuProps[] } & HTMLAttributes<HTMLDivElement>
+>;
 
-const MenuBar = ({ items }: Props) => {
+const MenuBar = ({ items, ...props }: Props) => {
   const [activeId, setActiveId] = useState<number>(-1);
   const [isActive, setIsActive] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
@@ -42,7 +45,7 @@ const MenuBar = ({ items }: Props) => {
   });
 
   return (
-    <div className={menubar} ref={menuRef}>
+    <div className={menubar} ref={menuRef} {...props}>
       {items.map((item, index) => {
         return (
           <Menu

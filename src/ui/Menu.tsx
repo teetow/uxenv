@@ -4,19 +4,19 @@ import { menu, submenu } from "./Menu.css";
 
 type Props = HTMLProps<HTMLDivElement> &
   PropsWithChildren<{
-    isActive?: boolean;
-    title?: string;
-    items?: Props[];
     className?: string;
+    isActive?: boolean;
+    items?: Props[];
+    title?: string;
   }>;
 
 const Menu = ({
-  title,
-  isActive,
   className,
+  isActive,
   items,
-  children,
   onMouseLeave,
+  title,
+  children,
   ...props
 }: Props) => {
   return (
@@ -30,9 +30,11 @@ const Menu = ({
         <span className={clsx(submenu)} onMouseLeave={onMouseLeave}>
           {items.map((item, index) => {
             return (
-              "items" in item && (
-                <Menu key={`${index}`} {...item} aria-label={item.title} />
-              )
+              <Menu
+                key={`${index}-${item.title}`}
+                {...item}
+                aria-label={item.title}
+              />
             );
           })}
         </span>

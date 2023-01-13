@@ -25,7 +25,7 @@ export const parseData = (data: string[], currentIndent = -1): Props[] => {
         newItem.items = parseData(lines, indent);
       }
     }
-    out.push(newItem);
+    if (newItem.title !== "") out.push(newItem);
   }
 
   return out;
