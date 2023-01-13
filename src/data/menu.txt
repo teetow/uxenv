@@ -27,7 +27,6 @@ File
 Edit
    Undo
    Redo
-   UndoItemsUpdateStep
    ====================
    Cut
    SplitCut
@@ -47,32 +46,44 @@ Edit
       ====================
       Join
       Disjoin
-   Labels
-      EditLabels
-      ====================
-      AddLabel
-      AddLabelPlaying
-      PasteNewLabel
+   ====================
+   AddLabel
+   PasteNewLabel
+   EditLabels
    Labeled
       CutLabels
-      DeleteLabels
-      ====================
       SplitCutLabels
-      SplitDeleteLabels
-      ====================
-      SilenceLabels
       CopyLabels
+      DeleteLabels
+      SplitDeleteLabels
       ====================
       SplitLabels
       JoinLabels
+      ====================
+      SilenceLabels
       DisjoinLabels
-   EditMetaData
    ====================
+   EditMetaData
    Preferences
 Select
    SelectAll
    SelectNone
+   SelTrackStartToEnd //rename: select entire track
+   SelTrackStartToCursor //rename: select before cursor
+   SelCursorToTrackEnd //rename: select after cursor
+   ====================
+   SelPrevClip
+   SelNextClip
+   MoveToPrevLabel
+   MoveToNextLabel
+   ====================
    ZeroCross
+   Looping
+      TogglePlayRegion
+      ClearPlayRegion
+      SetPlayRegionToSelection
+      SetPlayRegionIn
+      SetPlayRegionOut
 View
    Zoom
       ZoomIn
@@ -80,7 +91,7 @@ View
       ZoomOut
       ZoomSel
       ZoomToggle
-   TrackSize
+      ====================
       FitInWindow
       FitV
       CollapseAllTracks
@@ -110,23 +121,15 @@ View
       ShowAudioSetupTB
       ShareAudioTB
    ====================
-   ShowExtraMenus
    ShowClipping
 Record
    Record1stChoice
    Record2ndChoice
    TimerRecord
    PunchAndRoll
-   SoundActivationLevel
+   ====================
    SoundActivation
-   ====================
-   PlayRegion
-      TogglePlayRegion
-      ClearPlayRegion
-      SetPlayRegionToSelection
-      SetPlayRegionIn
-      SetPlayRegionOut
-   ====================
+   SoundActivationLevel
 Tracks
    NewMonoTrack
    NewStereoTrack
@@ -234,15 +237,6 @@ Extra
       MultiTool
       PrevTool
       NextTool
-   Mute
-      MuteAllTracks
-      UnmuteAllTracks
-      MuteTracks
-      UnmuteTracks
-   Pan
-      PanLeft
-      PanRight
-      PanCenter
    Mixer
       OutputGain
       OutputGainInc
@@ -255,6 +249,7 @@ Extra
       DeleteKey2
       ClipLeft
       ClipRight
+      AddLabelPlaying
    PlayAtSpeed
       PlayAtSpeedLooped
       PlayAtSpeed
@@ -279,17 +274,12 @@ Extra
       SelSetExtRight
       SelCntrLeft
       SelCntrRight
-      MoveToPrevLabel
-      MoveToNextLabel
       Tracks
          SelAllTracks
          SelSyncLockTracks
       Region
          SetLeftSelection
          SetRightSelection
-         SelTrackStartToCursor
-         SelCursorToTrackEnd
-         SelTrackStartToEnd
          ====================
          SelSave
          SelRestore
@@ -300,8 +290,6 @@ Extra
       Clip
          SelPrevClipBoundaryToCursor
          SelCursorToNextClipBoundary
-         SelPrevClip
-         SelNextClip
       ====================
       SelCursorStoredCursor
       StoreCursorPosition
@@ -338,12 +326,19 @@ Extra
       TrackPan
       TrackPanLeft
       TrackPanRight
+      PanLeft
+      PanRight
+      PanCenter
       TrackGain
       TrackGainInc
       TrackGainDec
       TrackMenu
       TrackMute
       TrackSolo
+      MuteAllTracks
+      UnmuteAllTracks
+      MuteTracks
+      UnmuteTracks
       TrackClose
       TrackMoveUp
       TrackMoveDown
@@ -390,6 +385,7 @@ Extra
       SWPlaythrough // move to audio setup menu
       RescanDevices // move to audio setup menu
       MoveSelectionWithTracks
+      ShowExtraMenus
    Benchmark
 Help
    QuickHelp
