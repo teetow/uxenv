@@ -5,6 +5,6 @@ export const menubar = style({
   gridAutoFlow: "column",
 });
 
-export const menuitem = style({
+export const menubaritem = style({
   display: "block",
 });
