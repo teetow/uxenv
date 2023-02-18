@@ -2,48 +2,80 @@ import clsx from "clsx";
 import { HTMLAttributes, PropsWithChildren, useRef } from "react";
 import useReveal from "../lib/useReveal";
 import Menu from "./Menu";
-import { menubar, menubaritem } from "./MenuBar.css";
+import { menuitem, menu__list } from "./Menu.css";
+import { menubar, menubarmenu } from "./MenuBar.css";
 
-const MenuBarItem = ({ title, items }: ItemProps) => (
-  <div title={title}>
-    {items?.map((item, index) => (
-      <MenuBarItem key={`${index}-${item.title}`} {...item} />
-    ))}
-  </div>
-);
-
-type ItemProps = {
-  key?: any;
-  className?: string;
-  items?: ItemProps[];
-  isOpen?: boolean;
+type WrapperProps = {
   title?: string;
+  items?: DropdownProps[];
+  showItems?: boolean;
 } & HTMLAttributes<HTMLDivElement>;
 
+const DropDownMenuItem = ({ title, items, ...props }: WrapperProps) => {
+  return (
+    <Menu.Item title={title} {...props}>
+      {items?.map((item, index) => (
+        <DropDownMenuItem key={`${index}`} {...item} />
+      ))}
+    </Menu.Item>
+  );
+};
+
+type DropdownProps = PropsWithChildren<{
+  key?: any;
+  className?: string;
+  items: DropdownProps[];
+  showItems?: boolean;
+  title?: string;
+}> &
+  HTMLAttributes<HTMLDivElement>;
+
+const DropdownMenu = ({ items, ...props }: DropdownProps) => {
+  const menuRef = useRef<HTMLDivElement>(null);
+  const [activeId, setActiveId, isOpen, setIsOpen] = useReveal(menuRef);
+  return (
+    <div className={clsx(menu__list, menubarmenu)} ref={menuRef}>
+      {items.map((item, index) => {
+        return (
+          <DropDownMenuItem
+            key={`${index}-${item.title}`}
+            {...item}
+            showItems={activeId === index}
+            onClick={() => setActiveId(index)}
+          />
+        );
+      })}
+    </div>
+  );
+};
+
 type Props = PropsWithChildren<
-  { items: ItemProps[] } & HTMLAttributes<HTMLDivElement>
+  { items: DropdownProps[] } & HTMLAttributes<HTMLDivElement>
 >;
 
 const MenuBar = ({ items: menuItems, ...props }: Props) => {
   const menuRef = useRef<HTMLDivElement>(null);
-  const [isOpen, setIsOpen, activeId, setActiveId] = useReveal(menuRef);
+  const [activeId, setActiveId, isOpen, setIsOpen] = useReveal(menuRef);
 
   return (
     <div className={menubar} ref={menuRef} {...props} tabIndex={0}>
-      {menuItems.map(({ items: subItems, ...barprops }, index) => {
+      {menuItems.map(({ ...barItemProps }, barItemIndex) => {
         return (
           <div
-            {...barprops}
-            className={clsx(menubaritem, { "is-open": isOpen })}
-            key={`${index}-${barprops.title}`}
-            onMouseEnter={() => setActiveId(index)}
-            onFocus={() => setActiveId(index)}
-            onClick={() => setIsOpen(true)}
+            key={`${barItemIndex}`}
+            className={clsx(menuitem, {
+              "is-active": isOpen && activeId === barItemIndex,
+            })}
+            onClick={() => {
+              setIsOpen(true);
+              setActiveId(barItemIndex);
+            }}
+            onMouseEnter={() => setActiveId(barItemIndex)}
           >
-            <div className="title">{barprops.title}</div>
-            {subItems?.map((subItem, i) => (
-              <MenuBarItem key={`${i}-${subItem.title}`} {...subItem} />
-            ))}
+            <div className="title">{barItemProps.title}</div>
+            {isOpen && activeId === barItemIndex && (
+              <DropdownMenu {...barItemProps} />
+            )}
           </div>
         );
       })}

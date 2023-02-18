@@ -24,6 +24,9 @@ const MenuItem = ({
   children,
   ...props
 }: PropsWithChildren<ItemProps>) => {
+  if (isDivider(title!)) {
+    return <hr />;
+  }
   const ref = useRef<HTMLDivElement>(null);
   const hasChildren = Children.count(children) > 0;
 
@@ -42,15 +45,16 @@ const MenuItem = ({
   );
 };
 
-const isDivider = (menutitle: string) => {
+export const isDivider = (menutitle: string) => {
   return menutitle.replaceAll("=", "").length === 0;
 };
 
 type Props = {
+  className?: string;
   isOpen?: boolean;
 };
 
-const Menu = ({ isOpen, children }: PropsWithChildren<Props>) => {
+const Menu = ({ className, isOpen, children }: PropsWithChildren<Props>) => {
   const [currentId, setCurrentId] = useState<Key | null>();
   const menuRef = useRef<HTMLDivElement>(null);
   const handleDeactivate = () => {
@@ -60,7 +64,7 @@ const Menu = ({ isOpen, children }: PropsWithChildren<Props>) => {
   useClickOutside(menuRef, handleDeactivate);
 
   return (
-    <div className={clsx(menu, { "is-open": isOpen })} ref={menuRef}>
+    <div className={clsx(className, menu, { "is-open": isOpen })} ref={menuRef}>
       {
         <div className="content">
           {Children.toArray(children).map((child) => {
@@ -69,7 +73,7 @@ const Menu = ({ isOpen, children }: PropsWithChildren<Props>) => {
               const showItems = currentId === child.key;
 
               if (isDivider(child.props.title)) {
-                return <hr />;
+                return <hr key={child.key} />;
               }
 
               return (
@@ -82,7 +86,7 @@ const Menu = ({ isOpen, children }: PropsWithChildren<Props>) => {
                   {children}
                 </MenuItem>
               );
-            } else return <>nope</>;
+            } else return <>not an element</>;
           })}
         </div>
       }

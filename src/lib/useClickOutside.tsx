@@ -10,8 +10,6 @@ const useClickOutside = (
     const handleClick = (event: MouseEvent) => {
       if (!triggerElem?.contains(event.target as HTMLElement)) {
         callback();
-      } else {
-        console.log("click inside");
       }
     };
 

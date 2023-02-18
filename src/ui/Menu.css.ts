@@ -1,5 +1,4 @@
 import { createVar, style } from "@vanilla-extract/css";
-import { menubar } from "./MenuBar.css";
 
 const bgColor = createVar();
 
@@ -8,6 +7,7 @@ export const menuitem = style({
   borderRadius: "2px",
   fontSize: "14px",
   padding: "0.25rem 0.5rem",
+  position: "relative",
 
   selectors: {
     "&:is-active": {},
@@ -38,12 +38,12 @@ export const menu__list = style({
   border: "1px solid #fff2",
   borderRadius: "2px",
   isolation: "isolate",
-  left: "calc(100% - 1rem)",
+  left: "100%",
   lineHeight: "2em",
   minWidth: "10em",
   padding: "2px",
   position: "absolute",
-  top: "50%",
+  top: 0,
   transition: "opacity 60ms ease-in-out",
 
   selectors: {

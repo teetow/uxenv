@@ -2,8 +2,8 @@ import { CSSProperties } from "react";
 import "./App.css";
 import data from "./data/menu.txt?raw";
 import { parseData } from "./lib/parseMenu";
-import { XTest } from "./ui/Menu";
 import MenuBar from "./ui/MenuBar";
+import { bapp } from "./App.css";
 
 const menuData = parseData(data.split("\n"));
 
@@ -14,7 +14,7 @@ const gridStyle = {
 
 function App() {
   return (
-    <div className="App">
+    <div className={bapp}>
       <style>{`
       .cell {
         align-self: stretch;
