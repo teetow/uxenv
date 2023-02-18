@@ -5,9 +5,9 @@ const useReveal = (trigger: RefObject<HTMLElement>) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeId, setActiveId] = useState(-1);
 
-  useClickOutside(trigger, () => setIsOpen(false), [isOpen]);
+  useClickOutside(trigger, () => setIsOpen(false));
 
-  return [isOpen, setIsOpen, activeId, setActiveId] as const;
+  return [activeId, setActiveId, isOpen, setIsOpen] as const;
 };
 
 export default useReveal;
